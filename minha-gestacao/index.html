@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Gestação - Acompanhamento Completo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Estilos adicionais */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+        }
+        /* Classe para abas de conteúdo ocultas */
+        .hidden-tab {
+            display: none;
+        }
+        /* Animação suave para transições */
+        .content-tab {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Estilo personalizado para cards */
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div id="app" class="flex flex-col min-h-screen">
+        <!-- Conteúdo Principal que será trocado -->
+        <main class="flex-1 overflow-y-auto pb-20">
+            <!-- ABA INÍCIO -->
+            <div id="inicio" class="content-tab p-4">
+                <div class="text-center mb-6">
+
+                
+                <div class="card p-6 mb-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center mr-3">
+                            <span class="text-pink-500 font-bold">24</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800">Olá, Mamãe! 💗</h2>
+                            <p class="text-gray-600">Sua gestação está na <b>24ª semana</b></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Imagem atualizada do bebê -->
+                    <div class="flex justify-center mb-4">
+                        <img 
+                            src="fetal_dev_24_weeks_sml.jpg" 
+                            alt="Bebê na 24ª semana de gestação"
+                            class="w-48 h-48 object-cover rounded-full border-4 border-pink-200 shadow-lg"
+                        />
+                    </div>
+                    
+                    <p class="text-gray-700 text-center">
+                        Seu bebê está se desenvolvendo rapidamente. 
+                        Na 24ª semana, ele já tem cerca de 30cm e pesa aproximadamente 650g.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="card p-4 text-center">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-2">
+                            <i data-lucide="calendar" class="text-blue-500 w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800">Próxima Consulta</h3>
+                        <p class="text-sm text-gray-600">20 de Outubro</p>
+                    </div>
+                    
+                    <div class="card p-4 text-center">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-2">
+                            <i data-lucide="scale" class="text-green-500 w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800">Seu Peso</h3>
+                        <p class="text-sm text-gray-600">67.5 kg</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA DIÁRIO -->
+            <div id="diario" class="content-tab hidden-tab p-4">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Diário da Gestação 💬</h2>
+                <p class="text-gray-600 mb-4">Registre seus sentimentos e experiências durante essa jornada especial.</p>
+                
+                <div class="card p-4 mb-6">
+                    <textarea
+                        id="diario-texto"
+                        placeholder="Como você está se sentindo hoje? Compartilhe suas emoções, sintomas ou pensamentos sobre a gravidez..."
+                        class="w-full p-3 border rounded-xl border-pink-200 mb-3 text-sm focus:ring-2 focus:ring-pink-300 focus:border-pink-300 transition resize-none"
+                        rows="5"
+                    ></textarea>
+                    <div class="flex items-center justify-between">
+                        <select id="diario-humor" class="border rounded-lg p-2 text-sm border-pink-200 focus:ring-2 focus:ring-pink-300 bg-white">
+                            <option>🙂 Feliz</option>
+                            <option>😐 Normal</option>
+                            <option>😞 Triste</option>
+                            <option>🤢 Enjoada</option>
+                            <option>😴 Cansada</option>
+                            <option>😊 Empolgada</option>
+                            <option>😰 Ansiosa</option>
+                            <option>😍 Apaixonada</option>
+                        </select>
+                        <button id="salvar-diario" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-90 transition-all shadow-md">
+                            Salvar Entrada
+                        </button>
+                    </div>
+                </div>
+                
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Suas Anotações</h3>
+                <div id="diario-entradas" class="space-y-4">
+                    <!-- Entradas de exemplo -->
+                    <div class="card p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-2">😍</span>
+                                <span class="font-medium text-gray-800">Apaixonada</span>
+                            </div>
+                            <span class="text-xs text-gray-500">quarta-feira, 1 de outubro de 2025, 20:30</span>
+                        </div>
+                        <p class="text-gray-700">Senti o bebê chutar hoje pela primeira vez de forma bem clara! Foi uma sensação mágica. Fiquei emocionada e meu parceiro também conseguiu sentir. Estamos nas nuvens!</p>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-2">😴</span>
+                                <span class="font-medium text-gray-800">Cansada</span>
+                            </div>
+                            <span class="text-xs text-gray-500">segunda-feira, 29 de setembro de 2025, 22:00</span>
+                        </div>
+                        <p class="text-gray-700">Dia longo e cansativo. A azia está começando a incomodar à noite. Tentei dormir um pouco mais cedo, mas a ansiedade para a próxima consulta me deixou acordada.</p>
+                    </div>
+                    <!-- Novas entradas serão adicionadas aqui -->
+                </div>
+            </div>
+
+            <!-- ABA PESO -->
+            <div id="peso" class="content-tab hidden-tab p-4">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Acompanhamento de Peso ⚖️</h2>
+                <p class="text-gray-600 mb-4">Monitore sua evolução de peso durante a gestação.</p>
+                
+                <div class="card p-4 mb-6">
+                    <div class="flex mb-3">
+                        <input
+                            id="peso-input"
+                            type="number"
+                            step="0.1"
+                            placeholder="Digite seu peso atual (kg)"
+                            class="flex-1 border rounded-l-xl p-3 text-sm border-pink-200 focus:ring-2 focus:ring-pink-300"
+                        />
+                        <button id="add-peso" class="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 rounded-r-xl text-sm font-bold hover:opacity-90 transition-all">
+                            Adicionar
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 text-center">
+                        O ganho de peso ideal durante a gestação varia conforme seu IMC pré-gestacional.
+                    </p>
+                </div>
+                
+                <div class="card p-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Histórico de Peso</h3>
+                    <ul id="lista-pesos" class="space-y-3">
+                        <!-- Pesos de exemplo -->
+                        <li class="flex justify-between items-center p-3 border-b border-gray-100 last:border-0">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center mr-3">
+                                    <i data-lucide="scale" class="w-4 h-4 text-pink-500"></i>
+                                </div>
+                                <span class="text-gray-700">15/09/2025</span>
+                            </div>
+                            <span class="font-semibold text-gray-800">66.2 kg</span>
+                        </li>
+                        <li class="flex justify-between items-center p-3 border-b border-gray-100 last:border-0">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center mr-3">
+                                    <i data-lucide="scale" class="w-4 h-4 text-pink-500"></i>
+                                </div>
+                                <span class="text-gray-700">01/09/2025</span>
+                            </div>
+                            <span class="font-semibold text-gray-800">65.0 kg</span>
+                        </li>
+                        <!-- Novos pesos serão adicionados aqui -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ABA DESENVOLVIMENTO -->
+            <div id="desenvolvimento" class="content-tab hidden-tab p-4">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Desenvolvimento do Bebê 🍼</h2>
+                <p class="text-gray-600 mb-4">Acompanhe as incríveis transformações do seu bebê a cada semana.</p>
+                
+                <div class="card p-5 mb-6">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/3 mb-4 md:mb-0 flex justify-center">
+                            <!-- Imagem atualizada do bebê -->
+                            <img 
+                                src="/minha-gestacao/fetal_dev_24_weeks_sml.jpg"
+                                alt="Bebê na 24ª semana de gestação"
+                                class="w-48 h-48 object-cover rounded-full border-4 border-pink-200 shadow-lg"
+                            />
+                        </div>
+                        <div class="md:w-2/3 md:pl-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">24ª Semana de Gestação</h3>
+                            <div class="space-y-3 text-gray-700">
+                                <p><span class="font-semibold text-pink-500">Tamanho:</span> Cerca de 30 cm (equivalente a uma espiga de milho)</p>
+                                <p><span class="font-semibold text-pink-500">Peso:</span> Aproximadamente 650 gramas</p>
+                                <p><span class="font-semibold text-pink-500">Desenvolvimento:</span> Os pulmões estão se desenvolvendo rapidamente, produzindo surfactante, uma substância que ajuda os alvéolos a se expandirem. As papilas gustativas estão se formando e o bebê já pode distinguir sabores diferentes pelo líquido amniótico.</p>
+                                <p><span class="font-semibold text-pink-500">Movimentos:</span> O bebê já tem um padrão de sono e vigília estabelecido e se movimenta bastante, embora ainda tenha espaço para dar cambalhotas.</p>
+                                <p><span class="font-semibold text-pink-500">Audição:</span> O sistema auditivo está bem desenvolvido e o bebê já reconhece sua voz e reage a sons externos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card p-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Mudanças no Seu Corpo</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Seu útero está agora cerca de 2,5 cm acima do umbigo</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Pode sentir contrações de Braxton Hicks (pré-parto)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Azia e indigestão podem se tornar mais frequentes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0"></i>
+                            <span>Inchaço nos pés e tornozelos é comum, especialmente ao final do dia</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- ABA CONSULTAS -->
+            <div id="consultas" class="content-tab hidden-tab p-4">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Consultas e Exames 👩‍⚕️</h2>
+                <p class="text-gray-600 mb-4">Acompanhe sua agenda de consultas e exames pré-natais.</p>
+                
+                <div class="card p-5 mb-6 bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i data-lucide="calendar" class="text-pink-500 w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">Próxima Consulta</h3>
+                            <p class="text-gray-700 mt-1">
+                                <b>20 de outubro de 2025</b> às <b>15h</b>
+                            </p>
+                            <p class="text-gray-600 mt-2">
+                                Com a <b>Dra. Michelle Fazolino Bim</b><br>
+                            </p>
+                            <button class="mt-3 bg-white text-pink-500 border border-pink-300 px-3 py-1 rounded-lg text-sm font-medium hover:bg-pink-50 transition-colors">
+                                Ver Detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Próximos Exames</h3>
+                <div class="space-y-4">
+                    <div class="card p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Ultrassom Morfológico</h4>
+                                <p class="text-gray-600 text-sm mt-1">25 de outubro de 2025 - 10:30h</p>
+                                <p class="text-gray-500 text-xs mt-1">Clínica de Imagens Fetal</p>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Agendado</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Exame de Glicemia</h4>
+                                <p class="text-gray-600 text-sm mt-1">28 de outubro de 2025 - 08:00h</p>
+                                <p class="text-gray-500 text-xs mt-1">Laboratório Saúde Total</p>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Aguardando</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 card p-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Consultas Realizadas</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <div>
+                                <p class="font-medium text-gray-800">Consulta de Rotina</p>
+                                <p class="text-gray-600 text-sm">15 de setembro de 2025</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Realizada</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <div>
+                                <p class="font-medium text-gray-800">Avaliação com Nutricionista</p>
+                                <p class="text-gray-600 text-sm">05 de setembro de 2025</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Realizada</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <div>
+                                <p class="font-medium text-gray-800">Primeiro Ultrassom</p>
+                                <p class="text-gray-600 text-sm">12 de agosto de 2025</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Realizada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Barra de Navegação Inferior -->
+        <footer class="fixed bottom-0 left-0 w-full bg-white border-t border-pink-200 flex justify-around py-3 shadow-lg">
+            <button data-tab="inicio" class="nav-button flex flex-col items-center text-sm text-pink-500 transition-colors">
+                <i data-lucide="home" class="w-5 h-5 mb-1"></i>
+                <span>Início</span>
+            </button>
+            <button data-tab="diario" class="nav-button flex flex-col items-center text-sm text-gray-400 transition-colors">
+                <i data-lucide="book" class="w-5 h-5 mb-1"></i>
+                <span>Diário</span>
+            </button>
+            <button data-tab="peso" class="nav-button flex flex-col items-center text-sm text-gray-400 transition-colors">
+                <i data-lucide="scale" class="w-5 h-5 mb-1"></i>
+                <span>Peso</span>
+            </button>
+            <button data-tab="desenvolvimento" class="nav-button flex flex-col items-center text-sm text-gray-400 transition-colors">
+                <i data-lucide="baby" class="w-5 h-5 mb-1"></i>
+                <span>Desenv.</span>
+            </button>
+            <button data-tab="consultas" class="nav-button flex flex-col items-center text-sm text-gray-400 transition-colors">
+                <i data-lucide="calendar" class="w-5 h-5 mb-1"></i>
+                <span>Consultas</span>
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons(); // Ativa os ícones
+
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentTabs = document.querySelectorAll('.content-tab');
+
+            // --- LÓGICA DE NAVEGAÇÃO ---
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTabId = button.dataset.tab;
+
+                    // Esconde todas as abas de conteúdo
+                    contentTabs.forEach(tab => {
+                        tab.classList.add('hidden-tab');
+                    });
+
+                    // Mostra a aba de conteúdo alvo
+                    document.getElementById(targetTabId).classList.remove('hidden-tab');
+
+                    // Atualiza o estilo dos botões
+                    navButtons.forEach(btn => {
+                        btn.classList.remove('text-pink-500');
+                        btn.classList.add('text-gray-400');
+                    });
+                    button.classList.add('text-pink-500');
+                    button.classList.remove('text-gray-400');
+                });
+            });
+
+            // --- LÓGICA DO DIÁRIO ---
+            const diarioTexto = document.getElementById('diario-texto');
+            const diarioHumor = document.getElementById('diario-humor');
+            const salvarDiarioBtn = document.getElementById('salvar-diario');
+            const diarioEntradas = document.getElementById('diario-entradas');
+            let diarioVazio = diarioEntradas.children.length === 0;
+
+            salvarDiarioBtn.addEventListener('click', () => {
+                const texto = diarioTexto.value.trim();
+                const humor = diarioHumor.value;
+
+                if (!texto) {
+                    alert('Por favor, escreva algo sobre como está se sentindo hoje.');
+                    return;
+                }
+
+                if (diarioVazio) {
+                    diarioEntradas.innerHTML = ''; // Limpa a mensagem inicial
+                    diarioVazio = false;
+                }
+
+                const data = new Date();
+                const dataFormatada = data.toLocaleDateString('pt-BR', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                const emoji = humor.split(' ')[0];
+
+                const novaEntradaHTML = `
+                    <div class="card p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center">
+                                <span class="text-2xl mr-2">${emoji}</span>
+                                <span class="font-medium text-gray-800">${humor.split(' ').slice(1).join(' ')}</span>
+                            </div>
+                            <span class="text-xs text-gray-500">${dataFormatada}</span>
+                        </div>
+                        <p class="text-gray-700">${texto}</p>
+                    </div>
+                `;
+
+                diarioEntradas.insertAdjacentHTML('afterbegin', novaEntradaHTML);
+                diarioTexto.value = ''; // Limpa o textarea
+                
+                // Feedback visual
+                salvarDiarioBtn.textContent = 'Salvo!';
+                salvarDiarioBtn.classList.remove('from-pink-500', 'to-purple-500');
+                salvarDiarioBtn.classList.add('from-green-500', 'to-green-600');
+                
+                setTimeout(() => {
+                    salvarDiarioBtn.textContent = 'Salvar Entrada';
+                    salvarDiarioBtn.classList.remove('from-green-500', 'to-green-600');
+                    salvarDiarioBtn.classList.add('from-pink-500', 'to-purple-500');
+                }, 1500);
+            });
+            
+            // --- LÓGICA DO PESO ---
+            const pesoInput = document.getElementById('peso-input');
+            const addPesoBtn = document.getElementById('add-peso');
+            const listaPesos = document.getElementById('lista-pesos');
+            let pesoVazio = listaPesos.children.length === 0;
+
+            addPesoBtn.addEventListener('click', () => {
+                const valor = parseFloat(pesoInput.value);
+                if (isNaN(valor) || valor <= 0) {
+                    alert('Por favor, insira um peso válido.');
+                    return;
+                }
+
+                if (pesoVazio) {
+                    listaPesos.innerHTML = ''; // Limpa a mensagem inicial
+                    pesoVazio = false;
+                }
+
+                const data = new Date().toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+
+                const novoPesoHTML = `
+                    <li class="flex justify-between items-center p-3 border-b border-gray-100 last:border-0">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center mr-3">
+                                <i data-lucide="scale" class="w-4 h-4 text-pink-500"></i>
+                            </div>
+                            <span class="text-gray-700">${data}</span>
+                        </div>
+                        <span class="font-semibold text-gray-800">${valor.toFixed(1)} kg</span>
+                    </li>
+                `;
+
+                listaPesos.insertAdjacentHTML('afterbegin', novoPesoHTML);
+                lucide.createIcons(); // Recria o ícone de balança
+                pesoInput.value = ''; // Limpa o input
+                
+                // Feedback visual
+                const originalText = addPesoBtn.textContent;
+                addPesoBtn.textContent = 'Adicionado!';
+                
+                setTimeout(() => {
+                    addPesoBtn.textContent = originalText;
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
